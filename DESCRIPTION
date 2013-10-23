@@ -1,0 +1,9 @@
+Package: Ramd
+Title: 
+Description: 
+Version: 0.1
+Authors@R: # getOptions('devtools.desc.author')
+Depends: R (>= 3.0.0)
+License: # getOptions('devtools.desc.license')
+LazyData: true
+: R AMD (asynchronous module definitions)
