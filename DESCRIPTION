@@ -6,4 +6,9 @@ Authors@R: # getOptions('devtools.desc.author')
 Depends: R (>= 3.0.0)
 License: # getOptions('devtools.desc.license')
 LazyData: true
-: R AMD (asynchronous module definitions)
+Description: R AMD (asynchronous module definitions)
+Collate:
+  'current_directory.r'
+  'load_package.r'
+  'packages.r'
+  'define.r'
