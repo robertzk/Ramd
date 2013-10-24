@@ -5,6 +5,6 @@
 #'   helper <- load_dependency('path/to/helper')
 #' }
 load_dependency <- function(dep) {
-  path <- base::normalizePath(paste(cd, "/", dep, '.r', sep = ''))
+  path <- base::normalizePath(paste(current_directory(), "/", dep, '.r', sep = ''))
   invisible(source(path)$value)
 }
