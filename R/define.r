@@ -21,9 +21,7 @@ define <- function(dependencies, fn = NULL, ...) {
     dependencies <- unlist(c(list(dependencies, fn), list(...)))
     fn = NULL
   }
-  arguments <- lapply(dependencies, function(dep) {
-    source(paste(cd, "/", dep, '.r', sep = ''))$value
-  })
+  arguments <- lapply(dependencies, load_dependency)
   return(
     if (is.null(fn)) {
       if (length(arguments) == 1) arguments[[1]]
