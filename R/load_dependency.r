@@ -15,7 +15,6 @@ load_dependency <- function(dep) {
       mtime == (cache_hit = get_src_cache(path))$mtime)
     value <- cache_hit$value
   else {
-    print('setting cache') # TODO: Check if file updated
     value <- source(path)$value
     set_src_cache(list(value = value, mtime = mtime), path)
   }
