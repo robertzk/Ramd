@@ -16,7 +16,7 @@ load_dependency <- function(dep) {
   else {
     print('setting cache') # TODO: Check if file updated
     value <- source(path)$value
-    cache[[path]] <- list(value = value, mtime = mtime)
+    cache[[path]] <<- list(value = value, mtime = mtime)
   }
   invisible(value)
 }
