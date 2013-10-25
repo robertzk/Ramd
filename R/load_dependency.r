@@ -4,11 +4,6 @@
 #' \dontrun{
 #'   helper <- load_dependency('path/to/helper')
 #' }
-.src_cache <- cache()
-set_src_cache <- function(value, key = NULL) .src_cache$set(value, key)
-get_src_cache <- function(key = NULL) .src_cache$get(key)
-get_src_cache_names() <- function() .src_cache$getNames()
-
 load_dependency <- function(dep) {
   path <- base::normalizePath(paste(current_directory(), "/", dep, '.r', sep = ''))
   fileinfo <- file.info(path)

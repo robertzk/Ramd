@@ -1,6 +1,6 @@
 #' Simple caching mechanism
 #' http://r.789695.n4.nabble.com/what-is-the-preferred-method-to-create-a-package-local-variable-tp923040p923052.html
-cache <- function() {
+simple_cache <- function() {
   .cache <- list()
 
   list(
@@ -15,4 +15,8 @@ cache <- function() {
     }
   )
 }
+.src_cache <- simple_cache()
+set_src_cache <- function(value, key = NULL) .src_cache$set(value, key)
+get_src_cache <- function(key = NULL) .src_cache$get(key)
+get_src_cache_names <- function() .src_cache$getNames()
 

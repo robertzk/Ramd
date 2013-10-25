@@ -8,9 +8,9 @@ License: GPL (>= 2)
 LazyData: true
 Collate:
   'Ramd-package.r'
+  'simple_cache.r'
   'current_directory.r'
+  'load_dependency.r'
   'load_package.r'
   'packages.r'
   'define.r'
-  'load_dependency.r'
-  'cache.r'
