@@ -4,19 +4,24 @@
 #' \dontrun{
 #'   helper <- load_dependency('path/to/helper')
 #' }
-cache <- list()
+.src_cache <- cache()
+set_src_cache <- function(value, key = NULL) .src_cache$set(value, key)
+get_src_cache <- function(key = NULL) .src_cache$get(key)
+get_src_cache_names() <- function() .src_cache$getNames()
+
 load_dependency <- function(dep) {
   path <- base::normalizePath(paste(current_directory(), "/", dep, '.r', sep = ''))
   fileinfo <- file.info(path)
   mtime <- fileinfo$mtime
 
   value <- NULL
-  if (path %in% names(cache) && mtime == cache[[path]]$mtime)
-    value <- cache[[path]]$value
+  
+  if (path %in% get_src_cache_names() &&
+      mtime == (cache_hit = get_src_cache(path))$mtime)
+    value <- cache_hit$value
   else {
     print('setting cache') # TODO: Check if file updated
-    value <- source(path)$value
-    cache[[path]] <<- list(value = value, mtime = mtime)
+    set_src_cache(list(value = value, mtime = mtime), path)
   }
   invisible(value)
 }

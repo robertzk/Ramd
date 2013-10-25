@@ -13,3 +13,4 @@ Collate:
   'packages.r'
   'define.r'
   'load_dependency.r'
+  'cache.r'
