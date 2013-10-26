@@ -14,7 +14,7 @@
 #' helper_fns[[1]]('do something'); helper_fns[[2]]('do something else')
 #' }
 define <- function(dependencies, fn = NULL, ...) {
-  if (inherits(dependencies, 'function')) return(fn())
+  if (inherits(dependencies, 'function')) return(dependencies())
 
   cd <- current_directory() 
   if (!is.null(fn) && !inherits(fn, 'function')) {
