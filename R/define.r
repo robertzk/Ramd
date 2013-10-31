@@ -43,7 +43,8 @@ define <- (function() {
       stop("Ramd::define only accepts atomic character vectors for ",
            "specifying dependencies")
     dependencies <- unlist(c(arguments))
-    if (options('Ramd.no_flatten')) dependencies
+    if ('Ramd.no_flatten' %in% names(.Options) &&
+        getOption('Ramd.no_flatten')) dependencies
     else flatten(dependencies)
   }
 

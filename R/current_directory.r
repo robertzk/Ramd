@@ -5,8 +5,8 @@ current_directory <-
     frame_files <- Filter(Negate(is.null), lapply(frames, function(x) x$ofile))
     if (length(frame_files) == 0)
       stop("Ramd cannot identify what directory you are currently executing ",
-           "in. Please specify it using base::setwd. Note that this is ",
-           "especially necessary from the console.")
+           "in. Please specify it using base::setwd. (Note that certain Ramd",
+           " features will not work from the console.")
     dirname(frame_files[[length(frame_files)]])
   })
 
