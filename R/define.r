@@ -94,7 +94,7 @@ define <- (function() {
         fn, length(dependencies))
 
     dependencies <- fetch_dependencies(dependencies)
-    if (valid_fn) do.call(fn, unname(dependencies))
+    if (valid_function) do.call(fn, unname(dependencies))
     else dependencies
   }
 
