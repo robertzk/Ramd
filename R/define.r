@@ -88,7 +88,8 @@ define <- (function() {
       if (length(dependencies) == 0)
         return (process_function_with_no_dependencies(fn))
     } else dependencies <- arguments
-    stop(dependencies)
+    assign('.fn', fn, globalenv())
+    stop(length(dependencies))
 
     if (valid_function)
       verify_number_of_required_arguments_matches_number_of_dependencies(
