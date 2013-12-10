@@ -82,12 +82,13 @@ define <- (function() {
     }
 
     fn <- tail(arguments, 1)[[1]]
-    valid_function <- inherits(fn, 'function')
+    valid_function <- is.function(fn)
     if (valid_function) {
       dependencies <- head(arguments, -1)
       if (length(dependencies) == 0)
         return (process_function_with_no_dependencies(fn))
     } else dependencies <- arguments
+    stop(dependencies)
 
     if (valid_function)
       verify_number_of_required_arguments_matches_number_of_dependencies(
