@@ -89,11 +89,12 @@ define <- (function() {
         return (process_function_with_no_dependencies(fn))
     } else dependencies <- arguments
     assign('.fn', fn, globalenv())
-    stop(length(dependencies))
+    assign('.deps', dependencies, globalenv())
+    stop(length(unlist(dependencies)))
 
     if (valid_function)
       verify_number_of_required_arguments_matches_number_of_dependencies(
-        fn, length(dependencies))
+        fn, length(unlist(dependencies)))
 
     dependencies <- fetch_dependencies(dependencies)
     if (valid_function) do.call(fn, unname(dependencies))
