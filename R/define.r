@@ -63,10 +63,10 @@ define <- (function() {
         stop("Ramd::define was not able to load dependencies because ",
              number_of_dependencies, " dependenc",
              # Pluralization, for fun!
-             if (number_of_dependencies == 1) 'y was' else 'ies were',
+             if (num_of_dependencies == 1) 'y was' else 'ies were',
              " passed in but the given function has ",
-             number_of_required_arguments, " required argument",
-             if (number_of_required_arguments == 1) '' else 's')
+             num_of_required_arguments, " required argument",
+             if (num_of_required_arguments == 1) '' else 's')
       TRUE
     }
 
