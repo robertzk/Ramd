@@ -5,7 +5,7 @@
 #'   helper <- load_dependency('path/to/helper')
 #' }
 load_dependency <- function(dep) {
-  path < suppressWarnings(base::normalizePath(
+  path <- suppressWarnings(base::normalizePath(
            paste(current_directory(), "/", dep, sep = '')))
   if (!file.exists(path)) path <- paste(path, '.r', sep = '')
   if (!file.exists(path))
