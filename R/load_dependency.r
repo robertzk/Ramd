@@ -6,7 +6,7 @@
 #' }
 load_dependency <- function(dep) {
   path < suppressWarnings(base::normalizePath(
-           paste(current_directory(), "/", dep, sep = ''))
+           paste(current_directory(), "/", dep, sep = '')))
   if (!file.exists(path)) path <- paste(path, '.r', sep = '')
   if (!file.exists(path))
     stop(paste("Unable to load dependency '", dep, "'", sep = ''))
