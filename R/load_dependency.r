@@ -19,7 +19,9 @@ load_dependency <- function(dep) {
       mtime == (cache_hit = get_src_cache(path))$mtime)
     value <- cache_hit$value
   else {
-    value <- source(path)$value
+    # We fetch "source" from the global environment to allow other packages
+    # to inject around sourcing files and be compatible with Ramd.
+    value <- get('source', globalenv())(path)$value
     set_src_cache(list(value = value, mtime = mtime), path)
   }
   invisible(value)
