@@ -1,3 +1,4 @@
 ./..Rcheck
 .gitignore
 ./.git
+.travis.yml
