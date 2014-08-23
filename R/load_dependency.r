@@ -1,6 +1,8 @@
 #' Load a bunch of dependencies by filename
 #'
+#' @name load_dependency
 #' @param dep Name of dependency, e.g., relative filename (without .r)
+#' @examples
 #' \dontrun{
 #'   helper <- load_dependency('path/to/helper')
 #' }

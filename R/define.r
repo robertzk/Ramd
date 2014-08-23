@@ -4,6 +4,7 @@
 #' and not loading multiple files twice unnecessarily.
 #'
 #' @export
+#' @param ... see examples.
 #' @examples
 #' \dontrun{
 #' helper_fn <- define('some/dir/helper_fn')

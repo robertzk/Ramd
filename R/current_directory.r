@@ -1,4 +1,4 @@
-#' Get the current working directory of running script from location of call
+# Get the current working directory of running script from location of call
 current_directory <-
   (function(frames = sys.frames()) {
     # http://stackoverflow.com/questions/1815606/rscript-determine-path-of-the-executing-script
