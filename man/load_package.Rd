@@ -2,6 +2,9 @@
 \name{load_package}
 \alias{load_package}
 \title{Load a package and install it if necessary}
+\usage{
+load_package(name)
+}
 \arguments{
 \item{name}{Name of package}
 }

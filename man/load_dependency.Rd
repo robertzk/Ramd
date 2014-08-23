@@ -2,6 +2,9 @@
 \name{load_dependency}
 \alias{load_dependency}
 \title{Load a bunch of dependencies by filename}
+\usage{
+load_dependency(dep)
+}
 \arguments{
 \item{dep}{Name of dependency, e.g., relative filename (without .r)}
 }
