@@ -1,4 +1,5 @@
 # String interpolation in R!
+#' export
 pp <- function(..., envir = parent.frame(), sep = '', collapse = '') {
   string <- list(...)
   if (length(string) > 1)
