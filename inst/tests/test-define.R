@@ -8,3 +8,10 @@ test_that('it can include a simple file', {
   })
 })
 
+test_that("it can include a file in a parent directory", {
+  within_file_structure(list(one = list(one.R = 'define("../two", function(two) { two + 1 })'),
+                             two.R = '1 + 1'), {
+    expect_identical(source(file.path(tempdir, 'one', 'one.R'))$value, 3)
+  })
+})
+
