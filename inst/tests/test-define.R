@@ -21,3 +21,5 @@ test_that("it can include a file in a subdirectory", {
     expect_identical(source(file.path(tempdir, 'one.R'))$value, 3)
   })
 })
+
+# TODO: (RK) Check global namespace pollution
