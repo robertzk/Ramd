@@ -17,4 +17,53 @@ the example below.
 Usage
 --------
 
-**TODO**.
+Consider the following files.
+
+```r
+### main.r
+define('blah/foo', 'blah2/faa', function(one, two) {
+  print(one + two)
+})
+
+### blah/foo.r
+x <- 1
+y <- 2
+x + y
+
+### blah2/faa.r
+z <- 1
+w <- 5
+w - z
+
+### R console
+library(Ramd); source('main.r')
+# > [1] 7
+```
+
+By separating out (this trivial example) into several pieces, it makes it
+easier to re-use that logic elsewhere, and prevents us from having to
+make global variables to communicate between files: when using Ramd's `define`
+function to include files (relative to the fine that is performing the `define`)
+the last value in that value is the "return value" (in the same way that [node.js](http://nodejs.org/)
+files have an "exports").
+
+In general, we can use `define` to include other scripts. Anything in those scripts
+will not pollute the global namespace, and the last expression in the script will
+be the "return value". If you need several things from a file, just wrap them in a
+list!
+
+```r
+define('../some_file', 'another/file', function(first, second) {
+  # The object "first" will be the result of executing some_file.R in
+  # the parent directory.
+
+  # The object "second" will be the result of executing another/file.R
+  # relative to this file's directory.
+
+  # Anything computed in this block will not affect the global namespace,
+  # and can safely by assigned (e.g., "x <- define(...)") or returned
+  # to another (recursive) define call (if this file itself is
+  # being included with "define").
+})
+```
+
