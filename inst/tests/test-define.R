@@ -1,0 +1,2 @@
+context('define')
+library(testthatsomemore)

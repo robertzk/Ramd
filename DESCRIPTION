@@ -1,5 +1,5 @@
 Package: Ramd
-Title: Tools for managing file/function dependencies in R
+Title: Tools for managing file/function dependencies in R.
 Description: R AMD (asynchronous module definitions)
 Version: 0.2
 Author: Robert Krzyzanowski <technoguyrob@gmail.com>
@@ -7,6 +7,7 @@ Maintainer: Robert Krzyzanowski <technoguyrob@gmail.com>
 Depends:
     R (>= 3.0.0)
 Suggests:
-    testthat
+    testthat,
+    testthatsomemore
 License: GPL (>= 2)
 LazyData: true
