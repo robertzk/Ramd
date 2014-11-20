@@ -23,3 +23,4 @@ test_that("it can include a file in a subdirectory", {
 })
 
 # TODO: (RK) Check global namespace pollution
+
