@@ -1,6 +1,9 @@
 Package: Ramd
-Title: Tools for managing file/function dependencies in R.
-Description: R AMD (asynchronous module definitions)
+Title: Tools for managing file/function dependencies in R
+Description: A "define" function is provided that allows
+    for inclusion of external scripts without polluting
+    the global namespace and makes it easier to
+    write modular R code.
 Version: 0.2
 Author: Robert Krzyzanowski <technoguyrob@gmail.com>
 Maintainer: Robert Krzyzanowski <technoguyrob@gmail.com>
