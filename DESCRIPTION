@@ -1,5 +1,5 @@
 Package: Ramd
-Title: Tools for managing file/function dependencies in R
+Title: Tools For Managing File/function Dependencies In R
 Description: A "define" function is provided that allows
     for inclusion of external scripts without polluting
     the global namespace and makes it easier to
