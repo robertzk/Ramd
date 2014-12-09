@@ -26,7 +26,7 @@ load_dependency <- function(dep) {
   else {
     # We fetch "source" from the global environment to allow other packages
     # to inject around sourcing files and be compatible with Ramd.
-    value <- get('source', globalenv())(path)$value
+    value <- base::source(path, local = new.env(parent = parent.env(topenv())))$value
     set_src_cache(list(value = value, mtime = mtime), path)
   }
   invisible(value)
