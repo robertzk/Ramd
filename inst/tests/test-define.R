@@ -22,5 +22,12 @@ test_that("it can include a file in a subdirectory", {
   })
 })
 
+test_that("it can use the local parameter", {
+  within_file_structure(list(one.R = 'one <- 1; Ramd::define("two", function(two) { one + two })',
+                             two.R = '1 + 1'), {
+    expect_identical(source(file.path(tempdir, 'one.R'))$value, 3)
+  })
+})
+
 # TODO: (RK) Check global namespace pollution
 

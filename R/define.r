@@ -49,9 +49,9 @@ define <- (function() {
     else flatten(dependencies)
   }
 
-  fetch_dependencies <- function(arguments) {
+  fetch_dependencies <- function(arguments, envir) {
     dependency_names <- parse_dependencies(arguments)
-    dependencies <- lapply(dependency_names, load_dependency)
+    dependencies <- lapply(dependency_names, load_dependency, envir = envir)
     names(dependencies) <- dependency_names
     dependencies
   }
@@ -71,7 +71,7 @@ define <- (function() {
       TRUE
     }
 
-  function(...) {
+  function(..., envir = parent.env(topenv())) {
     arguments <- list(...)
     if ('packages' %in% names(arguments)) {
       if (length(arguments) == 1)
@@ -94,7 +94,7 @@ define <- (function() {
       verify_number_of_required_arguments_matches_number_of_dependencies(
         fn, length(unlist(dependencies)))
 
-    dependencies <- fetch_dependencies(dependencies)
+    dependencies <- fetch_dependencies(dependencies, envir = envir)
     if (valid_function) do.call(fn, unname(dependencies))
     else dependencies
   }
