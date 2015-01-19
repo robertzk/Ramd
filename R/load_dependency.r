@@ -1,7 +1,7 @@
 #' Load a bunch of dependencies by filename
 #'
 #' @name load_dependency
-#' @param dep characte.r Name of dependency, e.g., relative filename (without .r)
+#' @param dep character. Name of dependency, e.g., relative filename (without .r)
 #' @param envir environment. The parent environment for the \code{base::source} call.
 #' @examples
 #' \dontrun{

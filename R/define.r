@@ -5,6 +5,8 @@
 #'
 #' @export
 #' @param ... see examples.
+#' @param envir environment. The parent environment to use when calling
+#'   \code{base::source} to fetch dependencies.
 #' @examples
 #' \dontrun{
 #' helper_fn <- define('some/dir/helper_fn')
@@ -13,7 +15,6 @@
 #' helper_fns[[1]]('do something'); helper_fns[[2]]('do something else')
 #' }
 define <- (function() {
-
   number_of_required_arguments <- function(fn) {
     function_has_variable_number_of_arguments <- '...' %in% names(formals(fn))
     if (function_has_variable_number_of_arguments) return(NA_real_)
