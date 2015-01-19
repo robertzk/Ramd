@@ -4,13 +4,16 @@
 \alias{define}
 \title{Load a bunch of dependencies by filename}
 \usage{
-define(..., envir = parent.env(topenv()))
+define(..., envir = parent.env(topenv()), local)
 }
 \arguments{
 \item{...}{see examples.}
 
 \item{envir}{environment. The parent environment to use when calling
 \code{base::source} to fetch dependencies.}
+
+\item{local}{logical. If \code{TRUE} and \code{envir} is missing,
+it will set \code{envir = parent.frame()}.}
 }
 \description{
 This is useful for reducing pollution in the global namespace,

@@ -7,6 +7,8 @@
 #' @param ... see examples.
 #' @param envir environment. The parent environment to use when calling
 #'   \code{base::source} to fetch dependencies.
+#' @param local logical. If \code{TRUE} and \code{envir} is missing,
+#'   it will set \code{envir = parent.frame()}.
 #' @examples
 #' \dontrun{
 #' helper_fn <- define('some/dir/helper_fn')
@@ -72,7 +74,11 @@ define <- (function() {
       TRUE
     }
 
-  function(..., envir = parent.env(topenv())) {
+  function(..., envir = parent.env(topenv()), local) {
+    if (!missing(local) && isTRUE(local)) {
+      envir <- parent.frame()
+    }
+
     arguments <- list(...)
     if ('packages' %in% names(arguments)) {
       if (length(arguments) == 1)
