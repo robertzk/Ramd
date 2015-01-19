@@ -23,8 +23,8 @@ test_that("it can include a file in a subdirectory", {
 })
 
 test_that("it can use the local parameter", {
-  within_file_structure(list(one.R = 'one <- 1; Ramd::define("two", function(two) { one + two })',
-                             two.R = '1 + 1'), {
+  within_file_structure(list(one.R = 'one <- 1; Ramd::define("two", function(one) { one + 1 })',
+                             two.R = 'one'), {
     expect_identical(source(file.path(tempdir, 'one.R'))$value, 3)
   })
 })

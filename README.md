@@ -67,3 +67,5 @@ define('../some_file', 'another/file', function(first, second) {
 })
 ```
 
+In general, using `define` will bypass the global environment, as it is meant to
+encourage modular code without [side effects](http://en.wikipedia.org/wiki/Side_effect_%28computer_science%29).
