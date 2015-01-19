@@ -29,5 +29,12 @@ test_that("it can use the local parameter", {
   })
 })
 
+test_that("it can use the envir parameter", {
+  within_file_structure(list(one.R = 'x <- new.env(); x$one <- 1; Ramd::define("two", envir = x, function(one) { one + 1 })',
+                             two.R = 'one'), {
+    expect_identical(source(file.path(tempdir, 'one.R'))$value, 2)
+  })
+})
+
 # TODO: (RK) Check global namespace pollution
 
