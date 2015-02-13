@@ -38,7 +38,7 @@ define <- (function() {
   flatten <- function(lists) {    
     atomic_vector <- unlist(c(lists))
     delimited_string <- paste(atomic_vector, collapse = ' ')
-    strsplit(delimited_string, '[^a-zA-Z0-9.-_`:\\\\\\/]+')[[1]]
+    strsplit(delimited_string, '[^-a-zA-Z0-9.-_`:\\\\\\/]+')[[1]]
   }
 
   parse_dependencies <- function(arguments) {
