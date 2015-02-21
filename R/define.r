@@ -89,7 +89,7 @@ define <- (function() {
       arguments <- arguments[names(arguments) != 'packages']
     }
 
-    fn <- tail(arguments, 1)[[1]]
+    fn <- arguments[[length(arguments)]]
     valid_function <- is.function(fn)
     if (valid_function) {
       dependencies <- head(arguments, -1)
