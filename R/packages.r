@@ -4,7 +4,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' packages('glmnet', 'caret)
+#' packages('glmnet', 'caret')
 #' packages('glmnet caret')
 #' packages(list('glmnet', 'caret'), c('e1071', 'parallel multicore'), 'stringr')
 #' }
