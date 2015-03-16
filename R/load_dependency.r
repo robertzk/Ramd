@@ -21,7 +21,7 @@ load_dependency <- function(dep, envir) {
 
   value <- NULL
   
-  if (path %in% get_src_cache_names() &&
+  if (FALSE && path %in% get_src_cache_names() &&
       mtime == (cache_hit = get_src_cache(path))$mtime) {
     value <- cache_hit$value
   } else {
