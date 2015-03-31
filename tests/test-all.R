@@ -1,3 +1,3 @@
 library(testthat)
 library(testthatsomemore)
-test_package('Ramd')
+test_check('Ramd')
