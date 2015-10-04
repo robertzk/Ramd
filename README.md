@@ -1,5 +1,5 @@
-AMD (asynchronous module definitions) in R [![Build Status](https://travis-ci.org/robertzk/Ramd.svg?branch=master)](https://travis-ci.org/robertzk/Ramd) [![Coverage Status](https://coveralls.io/repos/robertzk/Ramd/badge.png)](https://coveralls.io/r/robertzk/Ramd)
-=======
+Better project structures in R [![Build Status](https://travis-ci.org/robertzk/Ramd.svg?branch=master)](https://travis-ci.org/robertzk/Ramd) [![Coverage Status](https://coveralls.io/repos/robertzk/Ramd/badge.png)](https://coveralls.io/r/robertzk/Ramd)
+-------------------
 
 Like [require.js](http://requirejs.org/) was necessary to introduce structure and
 modularity into Javascript, Ramd aims to do the same for R.
