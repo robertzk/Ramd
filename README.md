@@ -21,16 +21,16 @@ Consider the following files.
 
 ```r
 ### main.r
-define('blah/foo', 'blah2/faa', function(one, two) {
+define('path/to/file1', 'path/to/file2', function(one, two) {
   print(one + two)
 })
 
-### blah/foo.r
+### path/to/file1.r
 x <- 1
 y <- 2
 x + y
 
-### blah2/faa.r
+### path/to/file2.r
 z <- 1
 w <- 5
 w - z
@@ -69,3 +69,8 @@ define('../some_file', 'another/file', function(first, second) {
 
 In general, using `define` will bypass the global environment, as it is meant to
 encourage modular code without [side effects](http://en.wikipedia.org/wiki/Side_effect_%28computer_science%29).
+
+* Note 
+  * `define` will return last function or value within target file. To return multiple functions or values (useful for explicitly scoping helper functions of variables from another script for readibility) then wrap functions of values in a list as last return statement. 
+  * `define` also accepts relative paths
+
