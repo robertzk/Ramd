@@ -5,8 +5,8 @@
 #' @examples
 #' \dontrun{
 #' packages('glmnet', 'caret')
-#' packages('glmnet caret')
-#' packages(list('glmnet', 'caret'), c('e1071', 'parallel multicore'), 'stringr')
+#' packages('glmnet caret')  # Can just separate with a space
+#' packages(list('glmnet', 'caret'), c('e1071', 'parallel multicore'), 'stringr')  # can nest space and vectorization
 #' }
 packages <- function(...) {
   split_packages <- function(string) strsplit(string, '[^a-zA-Z.$0-9_]+')[[1]]
