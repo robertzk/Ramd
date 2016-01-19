@@ -34,7 +34,7 @@ package_is_installed <- function(name) {
   if (is_github_package(name)) {
     name <- strsplit("robertzk/Ramd", "/")[[1]][[2]]
   }
-  require(name, character.only = TRUE)
+  name %in% utils::installed.packages()[,1]
 }
 
 is_github_package <- function(name) {
