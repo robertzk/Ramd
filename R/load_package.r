@@ -1,26 +1,39 @@
 #' Load a package and install it if necessary
 #' 
 #' @name load_package
-#' @param name Name of package
+#' @param name character. Name of package.
+#' @param verbose logical. Whether or not to announce each installation.
 #' @examples
 #' \dontrun{
 #" load_package("glmnet")
 #' }
-load_package <- function(name) {
-  if (package_is_installed(name)) { return(TRUE) }
+load_package <- function(name, verbose = FALSE) {
+  if (package_is_installed(name)) {
+    if (isTRUE(verbose)) { message(name, " already installed.") }
+    return(TRUE)
+  }
   if (is_github_package(name)) {
     remote <- "github"
-    devtools::install_github(package)
+    if (isTRUE(verbose)) { announce(name, remote) }
+    devtools::install_github(name)
   } else {
     remote <- "CRAN"
-    install.packages(package)  # install from CRAN
+    if (isTRUE(verbose)) { announce(name, remote) }
+    install.packages(name)  # install from CRAN
   }
   if (!package_is_installed(name)) {
     stop(paste('Package', name, "not found on", remote, "."))
   }
 }
 
+announce <- function(name, remote) {
+  message("Installing ", name, " from ", remote, ".")
+}
+
 package_is_installed <- function(name) {
+  if (is_github_package(name)) {
+    name <- strsplit("robertzk/Ramd", "/")[[1]][[2]]
+  }
   require(name, character.only = TRUE)
 }
 

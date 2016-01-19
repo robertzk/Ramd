@@ -1,6 +1,7 @@
 # Version 0.3
 
   * `packages` will now install from GitHub when the package name contains a '/'.
+  * `packages` will now take `verbose = TRUE` to announce the installations.
 
 # Version 0.2.1
 
