@@ -5,11 +5,16 @@
 #' package startup messages.
 #' @examples
 #' \dontrun{
-#' packages("glmnet", "caret")
-#' packages("glmnet caret")  # Can just separate with a space
-#' packages("robertzk/Ramd")  # Can install from GitHub
-#' packages("robertzk/Ramd", "hadley/dplyr", "peterhurford/batchman")
+#' packages("glmnet")           # Can install from CRAN
+#' packages("robertzk/Ramd")    # Can install from GitHub
+#' packages("glmnet", "caret")  # can load multiple packages in one call
+#' packages("glmnet caret")     # Can just separate with a space
+#' packages("robertzk/Ramd", "hadley/dplyr", "peterhurford/batchman")  # Can load multiple
 #' packages("robertzk/Ramd", "glmnet")  # Can install from both CRAN and GitHub
+#' packages("robertzk/Ramd@@v0.3")      # Can load from versions
+#' packages("robertzk/Ramd@@0.3")
+#' packages("robertzk/Ramd@@fbe1aa0e36df289b27881d077635352e6debdbc1")  # Can load from refs
+#' packages(list("FeiYeYe/xgboost", subdir = "R-package"))              # Can load from subdirectories
 #' }
 #' @export
 packages <- function(..., verbose = FALSE) {

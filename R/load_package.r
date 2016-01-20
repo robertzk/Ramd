@@ -5,7 +5,12 @@
 #' @param verbose logical. Whether or not to announce each installation.
 #' @examples
 #' \dontrun{
-#" load_package("glmnet")
+#' load_package("glmnet")
+#' load_package("robertzk/Ramd")
+#' load_package("robertzk/Ramd@@v0.3")   # Can load from versions
+#' load_package("robertzk/Ramd@@0.3")
+#' load_package("robertzk/Ramd@@fbe1aa0e36df289b27881d077635352e6debdbc1")  # Can load from refs
+#' load_package(list("FeiYeYe/xgboost", subdir = "R-package"))  # Can load from subdirectories
 #' }
 load_package <- function(name, verbose = FALSE) {
   if (is.list(name)) {
