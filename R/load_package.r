@@ -20,32 +20,46 @@ load_package <- function(name, verbose = FALSE) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
     return(TRUE)
   }
-  if (is_version_mismatch(name)) {
-    if (isTRUE(verbose)) {
-      message("Removing prior installation of ", name_from_github_name(name))
-    }
-    utils::remove.packages(name)
-  }
+
+  handle_version_mismatches(name, verbose)
+
   if (is_github_package(name)) {
-    ensure_devtools_installed()
     remote <- "GitHub"
-    if (isTRUE(verbose)) { announce(name, remote) }
-    if (length(metadata) > 0) {
-      do.call(devtools::install_github, c(list(name), metadata))
-    } else {
-      devtools::install_github(name)
-    }
+    install_from_github(name, metadata, remote, verbose)
   } else {
     remote <- "CRAN"
-    if (isTRUE(verbose)) { announce(name, remote) }
-    utils::install.packages(name)  # install from CRAN
+    install_from_cran(name, remote, verbose)
   }
+
   if (!package_is_installed(name)) {
     stop(paste("Package", name, "not found on", remote, "."))
   }
   TRUE
 }
 
+handle_version_mismatches <- function(name, verbose) {
+  if (is_version_mismatch(name)) {
+    if (isTRUE(verbose)) {
+      message("Removing prior installation of ", name_from_github_name(name))
+    }
+    utils::remove.packages(name)
+  }
+}
+
+install_from_github <- function(name, metadata, remote, verbose) {
+  ensure_devtools_installed()
+  if (isTRUE(verbose)) { announce(name, remote) }
+  if (length(metadata) > 0) {
+    do.call(devtools::install_github, c(list(name), metadata))
+  } else {
+    devtools::install_github(name)
+  }
+}
+
+install_from_cran <- function(name, remote, verbose) {
+  if (isTRUE(verbose)) { announce(name, remote) }
+  utils::install.packages(name)  # install from CRAN
+}
 
 announce <- function(name, remote) {
   message("Installing ", name, " from ", remote, ".")
