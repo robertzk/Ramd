@@ -4,9 +4,9 @@ library(testthatsomemore)
 describe("package already installed", {
   describe("within load_package", {
     with_mock(
-      `package_is_installed` = function(...) TRUE,
+      `Ramd:::package_is_installed` = function(...) TRUE,
       `devtools::install_github` = function(...) { stop("No installing!") },
-      `install.packages` = function(...) { stop("No installing!") }, {
+      `utils::install.packages` = function(...) { stop("No installing!") }, {
         test_that("it will not install if already installed", {
           expect_true(load_package("glmnet"))
         })
@@ -32,10 +32,10 @@ describe("version mismatching", {
   describe("within load_package", {
     test_that("it removes the package if there is a version mismatch", {
       with_mock(
-        `is_version_mismatch` = function(name) { TRUE },
+        `Ramd:::is_version_mismatch` = function(name) { TRUE },
         `devtools::install_github` = function(...) { "No installing!" },
-        `install.packages` = function(...) { "No installing!" },
-        `remove.packages` = function(name) { called <<- TRUE }, {
+        `utils::install.packages` = function(...) { "No installing!" },
+        `utils::remove.packages` = function(name) { called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
           expect_error(load_package("glmnet"))  # because glmnet is not actually installed
@@ -45,10 +45,10 @@ describe("version mismatching", {
     })
     test_that("it does not remove the package if there is not a version mismatch", {
       with_mock(
-        `is_version_mismatch` = function(name) { FALSE },
+        `Ramd:::is_version_mismatch` = function(name) { FALSE },
         `devtools::install_github` = function(...) { "No installing!" },
-        `install.packages` = function(...) { "No installing!" },
-        `remove.packages` = function(name) { called <<- TRUE }, {
+        `utils::install.packages` = function(...) { "No installing!" },
+        `utils::remove.packages` = function(name) { called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
           expect_error(load_package("glmnet"))  # because glmnet is not actually installed
@@ -76,7 +76,7 @@ describe("it can install from CRAN", {
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
-    `install.packages` = function(...) { "correct installer!" }, {
+    `utils::install.packages` = function(...) { "correct installer!" }, {
     test_that("it installs", {
       expect_true(load_package("glmnet"))
     })
@@ -92,9 +92,9 @@ describe("it can install from CRAN", {
   })
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
-    `install.packages` = function(...) { "correct installer!" },
-    `ensure_devtools_installed` = function(...) { TRUE },
-    `package_is_installed` = function(...) { FALSE }, {
+    `utils::install.packages` = function(...) { "correct installer!" },
+    `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
+    `Ramd:::package_is_installed` = function(...) { FALSE }, {
       test_that("if package isn't on CRAN, that's an error", {
         expect_error(load_package("bozo"), "not found")
       })
@@ -105,9 +105,9 @@ describe("it can install from GitHub", {
   describe("within load_package", {
     with_mock(
       `devtools::install_github` = function(...) { "Correct installer!" },
-      `package_is_installed` = function(...) { FALSE },
+      `Ramd:::package_is_installed` = function(...) { FALSE },
       `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
-      `install.packages` = function(...) { stop("Wrong installer!") }, {
+      `utils::install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs", {
           expect_true(load_package("robertzk/Ramd"))
         })
@@ -117,9 +117,9 @@ describe("it can install from GitHub", {
     })
     with_mock(
       `devtools::install_github` = function(...) { captured_args <<- list(...) },
-      `package_is_installed` = function(...) { FALSE },
-      `ensure_devtools_installed` = function(...) { TRUE },
-      `install.packages` = function(...) { stop("Wrong installer!") }, {
+      `Ramd:::package_is_installed` = function(...) { FALSE },
+      `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
+      `utils::install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs from a subdir", {
           expect_error(load_package(list("FeiYeYe/xgboost", subdir = "R-package")))
           expect_equal(captured_args[[1]], "FeiYeYe/xgboost")
@@ -128,9 +128,9 @@ describe("it can install from GitHub", {
     })
     with_mock(
       `devtools::install_github` = function(...) { "Correct installer" },
-      `ensure_devtools_installed` = function(...) { TRUE },
-      `install.packages` = function(...) { stop("Wrong installer!") },
-      `package_is_installed` = function(...) { FALSE }, {
+      `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
+      `utils::install.packages` = function(...) { stop("Wrong installer!") },
+      `Ramd:::package_is_installed` = function(...) { FALSE }, {
       test_that("if package isn't on GitHub, that's an error", {
         expect_error(load_package("bozo/bozo"), "not found")
       })

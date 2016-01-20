@@ -2,7 +2,7 @@ context("packages")
 library(testthatsomemore)
 
 with_mock(
-  `load_package` = function(package) { install_count <<- install_count + 1; TRUE }, {
+  `Ramd:::load_package` = function(package) { install_count <<- install_count + 1; TRUE }, {
     test_that("it can install from CRAN", {
       install_count <<- 0
       expect_equal(0, install_count)

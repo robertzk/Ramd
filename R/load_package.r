@@ -22,7 +22,7 @@ load_package <- function(name, verbose = FALSE) {
     if (isTRUE(verbose)) {
       message("Removing prior insallation of ", name_from_github_name(name))
     }
-    remove.packages(name)
+    utils::remove.packages(name)
   }
   if (is_github_package(name)) {
     ensure_devtools_installed()
@@ -36,7 +36,7 @@ load_package <- function(name, verbose = FALSE) {
   } else {
     remote <- "CRAN"
     if (isTRUE(verbose)) { announce(name, remote) }
-    install.packages(name)  # install from CRAN
+    utils::install.packages(name)  # install from CRAN
   }
   if (!package_is_installed(name)) {
     stop(paste("Package", name, "not found on", remote, "."))
