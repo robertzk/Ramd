@@ -13,12 +13,9 @@
 #' load_package(list("FeiYeYe/xgboost", subdir = "R-package"))  # Can load from subdirectories
 #' }
 load_package <- function(name, verbose = FALSE) {
-  if (is.list(name)) {
-    metadata <- name[-1]  # For tracking things like subdir
-    name <- name[[1]]
-  } else {
-    metadata <- NULL
-  }
+  metadata <- name[-1]  # For tracking things like subdir
+  name <- name[[1]]
+
   if (package_is_installed(name)) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
     return(TRUE)
@@ -33,8 +30,8 @@ load_package <- function(name, verbose = FALSE) {
     ensure_devtools_installed()
     remote <- "GitHub"
     if (isTRUE(verbose)) { announce(name, remote) }
-    if (!is.null(metadata)) {
-      do.call(devtools::install_github, c(name, metadata))
+    if (length(metadata) > 0) {
+      do.call(devtools::install_github, c(list(name), metadata))
     } else {
       devtools::install_github(name)
     }
