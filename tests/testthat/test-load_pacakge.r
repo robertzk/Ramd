@@ -113,12 +113,22 @@ describe("it can install from GitHub", {
         test_that("it messages the remote correctly", {
           expect_message(load_package("robertzk/Ramd", verbose = TRUE), "GitHub")
         })
-      })
-      with_mock(
-        `devtools::install_github` = function(...) { "Correct installer" },
-        `install.packages` = function(...) { stop("Wrong installer!") },
-        `package_is_installed` = function(...) { FALSE }, {
-        test_that("if package isn't on CRAN, that's an error", {
+    })
+    with_mock(
+      `devtools::install_github` = function(...) { captured_args <<- list(...) },
+      `package_is_installed` = function(...) { FALSE },
+      `install.packages` = function(...) { stop("Wrong installer!") }, {
+        test_that("it installs from a subdir", {
+          expect_error(load_package(list("FeiYeYe/xgboost", subdir = "R-package")))
+          expect_equal(captured_args[[1]], "FeiYeYe/xgboost")
+          expect_equal(captured_args$subdir, "R-package")
+        })
+    })
+    with_mock(
+      `devtools::install_github` = function(...) { "Correct installer" },
+      `install.packages` = function(...) { stop("Wrong installer!") },
+      `package_is_installed` = function(...) { FALSE }, {
+      test_that("if package isn't on CRAN, that's an error", {
         expect_error(load_package("bozo/bozo"), "not found")
       })
     })

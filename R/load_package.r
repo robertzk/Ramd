@@ -8,6 +8,12 @@
 #" load_package("glmnet")
 #' }
 load_package <- function(name, verbose = FALSE) {
+  if (is.list(name)) {
+    metadata <- name[-1]  # For tracking things like subdir
+    name <- name[[1]]
+  } else {
+    metadata <- NULL
+  }
   if (package_is_installed(name)) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
     return(TRUE)
@@ -21,7 +27,11 @@ load_package <- function(name, verbose = FALSE) {
   if (is_github_package(name)) {
     remote <- "GitHub"
     if (isTRUE(verbose)) { announce(name, remote) }
-    devtools::install_github(name)
+    if (!is.null(metadata)) {
+      do.call(devtools::install_github, c(name, metadata))
+    } else {
+      devtools::install_github(name)
+    }
   } else {
     remote <- "CRAN"
     if (isTRUE(verbose)) { announce(name, remote) }
@@ -30,6 +40,7 @@ load_package <- function(name, verbose = FALSE) {
   if (!package_is_installed(name)) {
     stop(paste("Package", name, "not found on", remote, "."))
   }
+  TRUE
 }
 
 

@@ -2,7 +2,7 @@ context("packages")
 library(testthatsomemore)
 
 with_mock(
-  `load_package` = function(package) { install_count <<- install_count + 1; package }, {
+  `load_package` = function(package) { install_count <<- install_count + 1; TRUE }, {
     test_that("it can install from CRAN", {
       install_count <<- 0
       expect_equal(0, install_count)
@@ -57,6 +57,20 @@ with_mock(
       expect_equal(0, install_count)
       expect_true(packages("robertzk/Ramd@v0.3 dplyr@1.0 glmnet@abc123"))
       expect_equal(3, install_count)
+    })
+
+    test_that("it can install a subdir", {
+      install_count <<- 0
+      expect_equal(0, install_count)
+      expect_true(packages(list("FeiYeYe/xgboost", subdir = "R-package")))
+      expect_equal(1, install_count)
+    })
+
+    test_that("it can install a subdir and something else", {
+      install_count <<- 0
+      expect_equal(0, install_count)
+      expect_true(packages(list("FeiYeYe/xgboost", subdir = "R-package"), "glmnet"))
+      expect_equal(2, install_count)
     })
 
     test_that("it installs uniquely", {
