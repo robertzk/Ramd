@@ -25,6 +25,7 @@ load_package <- function(name, verbose = FALSE) {
     remove.packages(name)
   }
   if (is_github_package(name)) {
+    ensure_devtools_installed()
     remote <- "GitHub"
     if (isTRUE(verbose)) { announce(name, remote) }
     if (!is.null(metadata)) {
@@ -46,14 +47,6 @@ load_package <- function(name, verbose = FALSE) {
 
 announce <- function(name, remote) {
   message("Installing ", name, " from ", remote, ".")
-}
-
-
-package_is_installed <- function(name) {
-  if (is_github_package(name)) {
-    name <- name_from_github_name(name)
-  }
-  name %in% utils::installed.packages()[,1]
 }
 
 

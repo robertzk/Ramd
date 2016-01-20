@@ -3,20 +3,15 @@
 #' @param ... List of packages
 #' @param verbose logical. Whether or not to announce installations and
 #' package startup messages.
-#' @export
 #' @examples
 #' \dontrun{
 #' packages("glmnet", "caret")
 #' packages("glmnet caret")  # Can just separate with a space
-#' packages(list("glmnet", "caret"), c("e1071", "parallel multicore"), "stringr")  # can nest space and vectorization
 #' packages("robertzk/Ramd")  # Can install from GitHub
-#' packages("robertzk/Ramd@v1.1")  # Can install a particular version
-#' packages("robertzk/Ramd@03bbd4120ba39cfb772485ca9f47aa5c91b2dc48")  # or a ref
-#' packages(list("FeiYeYe/xgboost", subdir = "R-package"))  # or a subdir
 #' packages("robertzk/Ramd", "hadley/dplyr", "peterhurford/batchman")
 #' packages("robertzk/Ramd", "glmnet")  # Can install from both CRAN and GitHub
 #' }
-#' @return TRUE
+#' @export
 packages <- function(..., verbose = FALSE) {
   split_packages <- function(string) strsplit(string, '[^a-zA-Z.$0-9_/@]+')[[1]]
   if ("list" %in% vapply(list(...), class, character(1))) {

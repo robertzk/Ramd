@@ -93,6 +93,7 @@ describe("it can install from CRAN", {
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `install.packages` = function(...) { "correct installer!" },
+    `ensure_devtools_installed` = function(...) { TRUE },
     `package_is_installed` = function(...) { FALSE }, {
       test_that("if package isn't on CRAN, that's an error", {
         expect_error(load_package("bozo"), "not found")
@@ -117,6 +118,7 @@ describe("it can install from GitHub", {
     with_mock(
       `devtools::install_github` = function(...) { captured_args <<- list(...) },
       `package_is_installed` = function(...) { FALSE },
+      `ensure_devtools_installed` = function(...) { TRUE },
       `install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs from a subdir", {
           expect_error(load_package(list("FeiYeYe/xgboost", subdir = "R-package")))
@@ -126,9 +128,10 @@ describe("it can install from GitHub", {
     })
     with_mock(
       `devtools::install_github` = function(...) { "Correct installer" },
+      `ensure_devtools_installed` = function(...) { TRUE },
       `install.packages` = function(...) { stop("Wrong installer!") },
       `package_is_installed` = function(...) { FALSE }, {
-      test_that("if package isn't on CRAN, that's an error", {
+      test_that("if package isn't on GitHub, that's an error", {
         expect_error(load_package("bozo/bozo"), "not found")
       })
     })

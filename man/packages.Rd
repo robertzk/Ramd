@@ -12,9 +12,6 @@ packages(..., verbose = FALSE)
 \item{verbose}{logical. Whether or not to announce installations and
 package startup messages.}
 }
-\value{
-TRUE
-}
 \description{
 Load a bunch of packages
 }
@@ -22,7 +19,6 @@ Load a bunch of packages
 \dontrun{
 packages("glmnet", "caret")
 packages("glmnet caret")  # Can just separate with a space
-packages(list("glmnet", "caret"), c("e1071", "parallel multicore"), "stringr")  # can nest space and vectorization
 packages("robertzk/Ramd")  # Can install from GitHub
 packages("robertzk/Ramd", "hadley/dplyr", "peterhurford/batchman")
 packages("robertzk/Ramd", "glmnet")  # Can install from both CRAN and GitHub
