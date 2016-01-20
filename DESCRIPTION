@@ -13,5 +13,5 @@ Suggests:
     testthat,
     devtools,
     testthatsomemore
-License: GPL (>= 2)
+License: MIT + file LICENSE
 LazyData: true
