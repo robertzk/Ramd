@@ -80,7 +80,7 @@ is_github_package <- function(name) {
 is_version_mismatch <- function(name) {
   is_versionable <- function(name) {
     grepl("@", name, fixed = TRUE) &&
-    grepl(".", name, fixed = TRUE)
+    grepl("^[v0-9.]*$", get_version_from_ref(name))
   }
   get_version_from_ref <- function(name) {
     # extract 0.3 from robertzk/Ramd@v0.3

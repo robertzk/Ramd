@@ -77,6 +77,10 @@ describe("version mismatching", {
           expect_false(is_version_mismatch("robertzk/Ramd"))
           expect_false(is_version_mismatch("Ramd"))
         })
+        test_that("no mismatches for refs or branches", {
+          expect_false(is_version_mismatch("robertzk/Ramd@1.1-thebranch"))
+          expect_false(is_version_mismatch("Ramd@vrefefrefref"))
+        })
         test_that("it works if the author's name has a v", {
           expect_true(is_version_mismatch("ihaveavinmyname/Ramd@1.2"))
           expect_true(is_version_mismatch("ihaveavinmyname/Ramd@v1.2"))
