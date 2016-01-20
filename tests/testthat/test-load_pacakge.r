@@ -60,14 +60,34 @@ describe("version mismatching", {
   describe("is_version_mismatch helper function", {
     with_mock(
       `utils::packageVersion` = function(name) { package_version("1.1") }, {
-        expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
-        expect_true(is_version_mismatch("robertzk/Ramd@v1.2"))
-        expect_true(is_version_mismatch("robertzk/Ramd@v1.1.3"))
-        expect_true(is_version_mismatch("robertzk/Ramd@1.0"))
-        expect_false(is_version_mismatch("robertzk/Ramd@v1.1"))
-        expect_false(is_version_mismatch("robertzk/Ramd@1.1"))
-        expect_false(is_version_mismatch("robertzk/Ramd"))
-        expect_false(is_version_mismatch("Ramd"))
+        test_that("it works on lower versions", {
+          expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
+          expect_true(is_version_mismatch("robertzk/Ramd@1.0"))
+          expect_true(is_version_mismatch("robertzk/Ramd@0.9"))
+        })
+        test_that("it works on higher versions", {
+          expect_true(is_version_mismatch("robertzk/Ramd@v1.2"))
+          expect_true(is_version_mismatch("robertzk/Ramd@v1.1.3"))
+        })
+        test_that("it matches on exact versions", {
+          expect_false(is_version_mismatch("robertzk/Ramd@v1.1"))
+          expect_false(is_version_mismatch("robertzk/Ramd@1.1"))
+        })
+        test_that("no mismatch if no version is supplied", {
+          expect_false(is_version_mismatch("robertzk/Ramd"))
+          expect_false(is_version_mismatch("Ramd"))
+        })
+        test_that("it works if the author's name has a v", {
+          expect_true(is_version_mismatch("ihaveavinmyname/Ramd@1.2"))
+          expect_true(is_version_mismatch("ihaveavinmyname/Ramd@v1.2"))
+          expect_true(is_version_mismatch("ihaveavinmyname/Ramd@v1.1.3"))
+          expect_true(is_version_mismatch("ihaveavinmyname/Ramd@v1.0"))
+          expect_false(is_version_mismatch("ihaveavinmyname/Ramd@v1.1"))
+          expect_true(is_version_mismatch("ihaveavinmyname/andavinmypackage@v1.0"))
+          expect_false(is_version_mismatch("ihaveavinmyname/andavinmypackage@v1.1"))
+          expect_true(is_version_mismatch("ihaveavinmyname/andavinmypackage@v1.2"))
+          expect_false(is_version_mismatch("ihaveavinmyname/Ramd"))
+        })
       }
     )
   })
