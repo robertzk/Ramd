@@ -59,7 +59,7 @@ describe("version mismatching", {
 
   describe("is_version_mismatch helper function", {
     with_mock(
-      `packageVersion` = function(name) { package_version("1.1") }, {
+      `utils::packageVersion` = function(name) { package_version("1.1") }, {
         expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
         expect_true(is_version_mismatch("robertzk/Ramd@v1.2"))
         expect_true(is_version_mismatch("robertzk/Ramd@v1.1.3"))

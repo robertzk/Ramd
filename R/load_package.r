@@ -76,7 +76,7 @@ is_version_mismatch <- function(name) {
   }
 
   is_version_mismatch <- function(name) {
-    packageVersion(name) != package_version(get_version_from_ref(name))
+    utils::packageVersion(name) != package_version(get_version_from_ref(name))
   }
 
   # Checks for specified refs or package names, e.g. robertzk/Ramd@v0.3
