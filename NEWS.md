@@ -2,6 +2,7 @@
 
   * `packages` will now install from GitHub when the package name contains a '/'.
   * `packages` will now take `verbose = TRUE` to announce the installations.
+  * Add test coverage for `packages` and `load_package`.
 
 # Version 0.2.1
 
