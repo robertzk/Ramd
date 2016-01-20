@@ -45,17 +45,10 @@ with_mock(
       expect_equal(3, install_count)
     })
 
-    test_that("it can install space separated", {
-      install_count <<- 0
-      expect_equal(0, install_count)
-      expect_true(packages("robertzk/Ramd dplyr glmnet"))
-      expect_equal(3, install_count)
-    })
-
     test_that("it can install on a package version", {
       install_count <<- 0
       expect_equal(0, install_count)
-      expect_true(packages("robertzk/Ramd@v0.3 dplyr@1.0 glmnet@abc123"))
+      expect_true(packages("robertzk/Ramd@v0.3", "dplyr@1.0", "glmnet@abc123"))
       expect_equal(3, install_count)
     })
 
@@ -76,7 +69,7 @@ with_mock(
     test_that("it installs uniquely", {
       install_count <<- 0
       expect_equal(0, install_count)
-      expect_true(packages("glmnet glmnet dplyr dplyr"))
+      expect_true(packages("glmnet", "glmnet", "dplyr", "dplyr"))
       expect_equal(2, install_count)
     })
   })
