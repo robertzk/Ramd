@@ -22,7 +22,7 @@ load_package <- function(name, verbose = FALSE) {
   }
   if (is_version_mismatch(name)) {
     if (isTRUE(verbose)) {
-      message("Removing prior insallation of ", name_from_github_name(name))
+      message("Removing prior installation of ", name_from_github_name(name))
     }
     utils::remove.packages(name)
   }
