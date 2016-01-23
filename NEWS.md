@@ -1,6 +1,6 @@
 # Version 0.3.1
 
-  * `pacakges` now brings the package into memory using `require`, which was the pre-0.3 functionality.
+  * `packages` now brings the package into memory using `require`, which was the pre-0.3 functionality.
 
 # Version 0.3
 
