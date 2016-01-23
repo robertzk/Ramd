@@ -34,7 +34,7 @@ load_package <- function(name, verbose = FALSE) {
   if (!package_is_installed(name)) {
     stop(paste("Package", name, "not found on", remote, "."))
   }
-  TRUE
+  require(name, character.only = TRUE)
 }
 
 handle_version_mismatches <- function(name, verbose) {
