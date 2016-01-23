@@ -100,6 +100,7 @@ describe("it can install from CRAN", {
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
+    `require` = function(...) { TRUE },
     `utils::install.packages` = function(...) { "correct installer!" }, {
     test_that("it installs", {
       expect_true(load_package("glmnet"))
@@ -131,6 +132,7 @@ describe("it can install from GitHub", {
       `devtools::install_github` = function(...) { "Correct installer!" },
       `Ramd:::package_is_installed` = function(...) { FALSE },
       `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
+      `require` = function(...) { TRUE },
       `utils::install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs", {
           expect_true(load_package("robertzk/Ramd"))

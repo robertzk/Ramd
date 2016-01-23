@@ -1,3 +1,7 @@
+# Version 0.3.1
+
+  * `packages` now brings the package into memory using `require`, which was the pre-0.3 functionality.
+
 # Version 0.3
 
   * `packages` will now install from GitHub when the package name contains a '/'.

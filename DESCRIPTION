@@ -4,7 +4,7 @@ Description: A "define" function is provided that allows
     for inclusion of external scripts without polluting
     the global namespace and makes it easier to
     write modular R code.
-Version: 0.3
+Version: 0.3.1
 Author: Robert Krzyzanowski <technoguyrob@gmail.com>
 Maintainer: Robert Krzyzanowski <technoguyrob@gmail.com>
 Depends:
