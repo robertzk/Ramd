@@ -1,6 +1,8 @@
 ensure_devtools_installed <- function() {
-  package_is_installed("devtools")
-  stop("Devtools must be installed first. Run `install.packages('devtools')`.")
+  if (!package_is_installed("devtools")) {
+    stop("Devtools must be installed first. Run `install.packages('devtools')`.")
+  }
+  TRUE
 }
 
 package_is_installed <- function(name) {
