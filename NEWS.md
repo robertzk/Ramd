@@ -1,3 +1,7 @@
+# Version 0.3.2
+
+  * Fix very bad problem where all package installations resulted in errors. :(
+
 # Version 0.3.1
 
   * `packages` now brings the package into memory using `require`, which was the pre-0.3 functionality.
