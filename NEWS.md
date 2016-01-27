@@ -1,3 +1,7 @@
+# Version 0.3.7
+
+  * Make sure a package exists before checking it for version mismatches.
+
 # Version 0.3.6
 
   * Fix more ref-related package name problems. :(
