@@ -1,3 +1,7 @@
+# Version 0.3.5
+
+  * Fix the way the package is removed during a version mismatch, given the correct name. :(
+
 # Version 0.3.4
 
   * Fix the way the package version is being passed into version mismatch testing. :(

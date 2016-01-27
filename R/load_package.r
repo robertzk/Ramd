@@ -42,7 +42,7 @@ handle_version_mismatches <- function(name, verbose) {
     if (isTRUE(verbose)) {
       message("Removing prior installation of ", name_from_github_name(name))
     }
-    utils::remove.packages(name)
+    utils::remove.packages(get_package_name_from_ref(name))
   }
 }
 
@@ -77,6 +77,12 @@ is_github_package <- function(name) {
 }
 
 
+get_package_name_from_ref <- function(name) {
+  # extract Ramd from robertzk/Ramd@v0.3
+  strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
+}
+
+
 is_version_mismatch <- function(name) {
   is_versionable <- function(name) {
     grepl("@", name, fixed = TRUE) &&
@@ -89,10 +95,6 @@ is_version_mismatch <- function(name) {
       name <- strsplit(name, "v")[[1]][[2]]
     }
     name
-  }
-  get_package_name_from_ref <- function(name) {
-    # extract Ramd from robertzk/Ramd@v0.3
-    strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
   }
 
   is_version_mismatch <- function(name) {

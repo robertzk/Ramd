@@ -1,6 +1,12 @@
 context("load_package")
 library(testthatsomemore)
 
+check_for_refs <- function(name) {
+  if (grepl("@", name, fixed = TRUE) || grepl("/", name, fixed = TRUE)) {
+    stop("You attempted to test ", name, " which has a bad ref.")
+  }
+}
+
 describe("package already installed", {
   describe("within load_package", {
     with_mock(
@@ -34,12 +40,13 @@ describe("version mismatching", {
       `Ramd:::is_version_mismatch` = function(name) { TRUE },
       `devtools::install_github` = function(...) { "No installing!" },
       `utils::install.packages` = function(...) { "No installing!" },
-      `utils::remove.packages` = function(name) { called <<- TRUE }, {
+      `utils::packageVersion` = function(name) { check_for_refs(name); package_version("1.1") },
+      `utils::remove.packages` = function(name) { check_for_refs(name); called <<- TRUE }, {
         test_that("it removes the package if it is not already installed", {
           with_mock(`Ramd:::package_is_installed` = function(...) { FALSE }, {
             called <<- FALSE
             expect_false(called)
-            expect_error(load_package("glmnet"))
+            expect_error(load_package("robertzk/Ramd@v1.2"))
             expect_true(called)
           })
         })
@@ -47,7 +54,7 @@ describe("version mismatching", {
           with_mock(`Ramd:::package_is_installed` = function(...) { TRUE }, {
             called <<- FALSE
             expect_false(called)
-            expect_true(load_package("glmnet"))
+            expect_true(load_package("robertzk/Ramd@v1.2"))
             expect_true(called)
           })
         })
@@ -69,13 +76,7 @@ describe("version mismatching", {
 
   describe("is_version_mismatch helper function", {
     with_mock(
-      `utils::packageVersion` = function(name) {
-        # Make sure the package name does not accidentally include the ref tag.
-        if (identical(name, "Ramd") || identical(name, "andavinmypackage")) {
-          return(package_version("1.1"))
-        } else {
-          stop("You're testing the package ", name, " when you should test Ramd.")
-        }}, {
+      `utils::packageVersion` = function(name) { check_for_refs(name); package_version("1.1") }, {
         test_that("it works on lower versions", {
           expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
           expect_true(is_version_mismatch("robertzk/Ramd@1.0"))
