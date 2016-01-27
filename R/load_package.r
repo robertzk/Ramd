@@ -16,12 +16,12 @@ load_package <- function(name, verbose = FALSE) {
   metadata <- name[-1]  # For tracking things like subdir
   name <- name[[1]]
 
+  handle_version_mismatches(name, verbose)
+
   if (package_is_installed(name)) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
     return(TRUE)
   }
-
-  handle_version_mismatches(name, verbose)
 
   if (is_github_package(name)) {
     remote <- "GitHub"
