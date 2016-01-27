@@ -42,7 +42,7 @@ handle_version_mismatches <- function(name, verbose) {
     if (isTRUE(verbose)) {
       message("Removing prior installation of ", name_from_github_name(name))
     }
-    utils::remove.packages(name)
+    utils::remove.packages(get_package_name_from_ref(name))
   }
 }
 
