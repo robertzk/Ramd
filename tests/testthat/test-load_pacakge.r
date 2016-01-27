@@ -69,7 +69,13 @@ describe("version mismatching", {
 
   describe("is_version_mismatch helper function", {
     with_mock(
-      `utils::packageVersion` = function(name) { package_version("1.1") }, {
+      `utils::packageVersion` = function(name) {
+        # Make sure the package name does not accidentally include the ref tag.
+        if (identical(name, "Ramd") || identical(name, "andavinmypackage")) {
+          return(package_version("1.1"))
+        } else {
+          stop("You're testing the package ", name, "when you should test Ramd.")
+        }}, {
         test_that("it works on lower versions", {
           expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
           expect_true(is_version_mismatch("robertzk/Ramd@1.0"))
