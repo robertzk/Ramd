@@ -85,6 +85,8 @@ get_package_name_from_ref <- function(name) {
 
 
 is_version_mismatch <- function(name) {
+  package_name <- get_package_name_from_ref(name)
+
   is_versionable <- function(name) {
     grepl("@", name, fixed = TRUE) &&
     grepl("^[v0-9.]*$", get_version_from_ref(name))
@@ -99,10 +101,11 @@ is_version_mismatch <- function(name) {
   }
 
   is_version_mismatch <- function(name) {
-    utils::packageVersion(get_package_name_from_ref(name)) !=
-      package_version(get_version_from_ref(name))
+    utils::packageVersion(package_name) != package_version(get_version_from_ref(name))
   }
 
-  # Checks for specified refs or package names, e.g. robertzk/Ramd@v0.3
-  is_github_package(name) && is_versionable(name) && is_version_mismatch(name)
+  package_is_installed(package_name) &&
+    is_github_package(name) &&
+    is_versionable(name) &&
+    is_version_mismatch(name)
 }

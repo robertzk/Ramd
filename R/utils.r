@@ -6,8 +6,5 @@ ensure_devtools_installed <- function() {
 }
 
 package_is_installed <- function(name) {
-  if (is_github_package(name)) {
-    name <- name_from_github_name(name)
-  }
-  name %in% utils::installed.packages()[,1]
+  get_package_name_from_ref(name) %in% utils::installed.packages()[,1]
 }

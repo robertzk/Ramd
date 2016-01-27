@@ -10,7 +10,7 @@ check_for_refs <- function(name) {
 describe("package already installed", {
   describe("within load_package", {
     with_mock(
-      `Ramd:::package_is_installed` = function(...) TRUE,
+      `Ramd:::package_is_installed` = function(name) { check_for_refs(name); TRUE },
       `devtools::install_github` = function(...) { stop("No installing!") },
       `utils::install.packages` = function(...) { stop("No installing!") }, {
         test_that("it will not install if already installed", {
@@ -51,7 +51,8 @@ describe("version mismatching", {
           })
         })
         test_that("it removes the package even if it is already installed", {
-          with_mock(`Ramd:::package_is_installed` = function(...) { TRUE }, {
+          with_mock(
+            `Ramd:::package_is_installed` = function(name) { check_for_refs(name); TRUE }, {
             called <<- FALSE
             expect_false(called)
             expect_true(load_package("robertzk/Ramd@v1.2"))
@@ -76,7 +77,8 @@ describe("version mismatching", {
 
   describe("is_version_mismatch helper function", {
     with_mock(
-      `utils::packageVersion` = function(name) { check_for_refs(name); package_version("1.1") }, {
+      `utils::packageVersion` = function(name) { check_for_refs(name); package_version("1.1") },
+      `Ramd:::package_is_installed` = function(name) { check_for_refs(name); TRUE }, {
         test_that("it works on lower versions", {
           expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
           expect_true(is_version_mismatch("robertzk/Ramd@1.0"))
@@ -96,7 +98,7 @@ describe("version mismatching", {
         })
         test_that("no mismatches for refs or branches", {
           expect_false(is_version_mismatch("robertzk/Ramd@1.1-thebranch"))
-          expect_false(is_version_mismatch("Ramd@vrefefrefref"))
+          expect_false(is_version_mismatch("robertzk/Ramd@vrefefrefref"))
         })
         test_that("it works if the author's name has a v", {
           expect_true(is_version_mismatch("ihaveavinmyname/Ramd@1.2"))
