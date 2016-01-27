@@ -91,7 +91,8 @@ is_version_mismatch <- function(name) {
     name
   }
   get_package_name_from_ref <- function(name) {
-    strsplit(name, "@")[[1]][[1]]
+    # extract Ramd from robertzk/Ramd@v0.3
+    strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
   }
 
   is_version_mismatch <- function(name) {

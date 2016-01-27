@@ -74,7 +74,7 @@ describe("version mismatching", {
         if (identical(name, "Ramd") || identical(name, "andavinmypackage")) {
           return(package_version("1.1"))
         } else {
-          stop("You're testing the package ", name, "when you should test Ramd.")
+          stop("You're testing the package ", name, " when you should test Ramd.")
         }}, {
         test_that("it works on lower versions", {
           expect_true(is_version_mismatch("robertzk/Ramd@v1.0"))
