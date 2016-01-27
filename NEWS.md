@@ -1,3 +1,7 @@
+# Version 0.3.6
+
+  * Fix more ref-related package name problems. :(
+
 # Version 0.3.5
 
   * Fix the way the package is removed during a version mismatch, given the correct name. :(
