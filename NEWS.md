@@ -1,3 +1,7 @@
+# Version 0.3.4
+
+  * Fix the way the package version is being passed into version mismatch testing. :(
+
 # Versoin 0.3.3
   
   * Fix problem where version mismatch removal was not actually taking place. :(

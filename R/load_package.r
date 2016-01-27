@@ -90,9 +90,14 @@ is_version_mismatch <- function(name) {
     }
     name
   }
+  get_package_name_from_ref <- function(name) {
+    # extract Ramd from robertzk/Ramd@v0.3
+    strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
+  }
 
   is_version_mismatch <- function(name) {
-    utils::packageVersion(name) != package_version(get_version_from_ref(name))
+    utils::packageVersion(get_package_name_from_ref(name)) !=
+      package_version(get_version_from_ref(name))
   }
 
   # Checks for specified refs or package names, e.g. robertzk/Ramd@v0.3
