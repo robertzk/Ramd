@@ -30,16 +30,26 @@ describe("package already installed", {
 
 describe("version mismatching", {
   describe("within load_package", {
-    test_that("it removes the package if there is a version mismatch", {
-      with_mock(
-        `Ramd:::is_version_mismatch` = function(name) { TRUE },
-        `devtools::install_github` = function(...) { "No installing!" },
-        `utils::install.packages` = function(...) { "No installing!" },
-        `utils::remove.packages` = function(name) { called <<- TRUE }, {
-          called <<- FALSE
-          expect_false(called)
-          expect_error(load_package("glmnet"))  # because glmnet is not actually installed
-          expect_true(called)
+    with_mock(
+      `Ramd:::is_version_mismatch` = function(name) { TRUE },
+      `devtools::install_github` = function(...) { "No installing!" },
+      `utils::install.packages` = function(...) { "No installing!" },
+      `utils::remove.packages` = function(name) { called <<- TRUE }, {
+        test_that("it removes the package if it is not already installed", {
+          with_mock(`Ramd:::package_is_installed` = function(...) { FALSE }, {
+            called <<- FALSE
+            expect_false(called)
+            expect_error(load_package("glmnet"))
+            expect_true(called)
+          })
+        })
+        test_that("it removes the package even if it is already installed", {
+          with_mock(`Ramd:::package_is_installed` = function(...) { TRUE }, {
+            called <<- FALSE
+            expect_false(called)
+            expect_true(load_package("glmnet"))
+            expect_true(called)
+          })
         })
       })
     })
