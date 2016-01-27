@@ -77,6 +77,12 @@ is_github_package <- function(name) {
 }
 
 
+get_package_name_from_ref <- function(name) {
+  # extract Ramd from robertzk/Ramd@v0.3
+  strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
+}
+
+
 is_version_mismatch <- function(name) {
   is_versionable <- function(name) {
     grepl("@", name, fixed = TRUE) &&
@@ -89,10 +95,6 @@ is_version_mismatch <- function(name) {
       name <- strsplit(name, "v")[[1]][[2]]
     }
     name
-  }
-  get_package_name_from_ref <- function(name) {
-    # extract Ramd from robertzk/Ramd@v0.3
-    strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
   }
 
   is_version_mismatch <- function(name) {
