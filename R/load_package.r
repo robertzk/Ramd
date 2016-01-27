@@ -15,10 +15,11 @@
 load_package <- function(name, verbose = FALSE) {
   metadata <- name[-1]  # For tracking things like subdir
   name <- name[[1]]
+  package_name <- get_package_name_from_ref(name)
 
   handle_version_mismatches(name, verbose)
 
-  if (package_is_installed(name)) {
+  if (package_is_installed(package_name)) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
     return(TRUE)
   }
@@ -31,18 +32,19 @@ load_package <- function(name, verbose = FALSE) {
     install_from_cran(name, remote, verbose)
   }
 
-  if (!package_is_installed(name)) {
+  if (!package_is_installed(package_name)) {
     stop(paste("Package", name, "not found on", remote, "."))
   }
-  require(name, character.only = TRUE)
+  require(package_name, character.only = TRUE)
 }
 
 handle_version_mismatches <- function(name, verbose) {
+  package_name <- get_package_name_from_ref(name)
   if (is_version_mismatch(name)) {
     if (isTRUE(verbose)) {
-      message("Removing prior installation of ", name_from_github_name(name))
+      message("Removing prior installation of ", package_name, ".")
     }
-    utils::remove.packages(get_package_name_from_ref(name))
+    utils::remove.packages(package_name)
   }
 }
 
@@ -66,11 +68,6 @@ announce <- function(name, remote) {
 }
 
 
-name_from_github_name <- function(name) {
-  strsplit(strsplit(name, "/")[[1]][[2]], "@")[[1]][[1]]
-}
-
-
 is_github_package <- function(name) {
   # Checks for github repos, e.g., robertzk/Ramd
   grepl("/", name, fixed = TRUE)
@@ -78,8 +75,12 @@ is_github_package <- function(name) {
 
 
 get_package_name_from_ref <- function(name) {
-  # extract Ramd from robertzk/Ramd@v0.3
-  strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
+  if (is_github_package(name)) {
+    # extract Ramd from robertzk/Ramd@v0.3
+    strsplit(strsplit(name, "@")[[1]][[1]], "/")[[1]][[2]]
+  } else {
+    name
+  }
 }
 
 

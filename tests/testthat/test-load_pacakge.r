@@ -65,7 +65,7 @@ describe("version mismatching", {
         `Ramd:::is_version_mismatch` = function(name) { FALSE },
         `devtools::install_github` = function(...) { "No installing!" },
         `utils::install.packages` = function(...) { "No installing!" },
-        `utils::remove.packages` = function(name) { called <<- TRUE }, {
+        `utils::remove.packages` = function(name) { check_for_refs(name); called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
           expect_error(load_package("glmnet"))  # because glmnet is not actually installed
@@ -117,7 +117,7 @@ describe("it can install from CRAN", {
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
-    `require` = function(...) { TRUE },
+    `require` = function(name, ...) { check_for_refs(name); TRUE },
     `utils::install.packages` = function(...) { "correct installer!" }, {
     test_that("it installs", {
       expect_true(load_package("glmnet"))
@@ -136,7 +136,7 @@ describe("it can install from CRAN", {
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `utils::install.packages` = function(...) { "correct installer!" },
     `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
-    `Ramd:::package_is_installed` = function(...) { FALSE }, {
+    `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE }, {
       test_that("if package isn't on CRAN, that's an error", {
         expect_error(load_package("bozo"), "not found")
       })
@@ -147,9 +147,9 @@ describe("it can install from GitHub", {
   describe("within load_package", {
     with_mock(
       `devtools::install_github` = function(...) { "Correct installer!" },
-      `Ramd:::package_is_installed` = function(...) { FALSE },
+      `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
       `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
-      `require` = function(...) { TRUE },
+      `require` = function(name, ...) { check_for_refs(name); TRUE },
       `utils::install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs", {
           expect_true(load_package("robertzk/Ramd"))
@@ -160,7 +160,7 @@ describe("it can install from GitHub", {
     })
     with_mock(
       `devtools::install_github` = function(...) { captured_args <<- list(...) },
-      `Ramd:::package_is_installed` = function(...) { FALSE },
+      `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
       `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
       `utils::install.packages` = function(...) { stop("Wrong installer!") }, {
         test_that("it installs from a subdir", {
@@ -173,7 +173,7 @@ describe("it can install from GitHub", {
       `devtools::install_github` = function(...) { "Correct installer" },
       `Ramd:::ensure_devtools_installed` = function(...) { TRUE },
       `utils::install.packages` = function(...) { stop("Wrong installer!") },
-      `Ramd:::package_is_installed` = function(...) { FALSE }, {
+      `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE }, {
       test_that("if package isn't on GitHub, that's an error", {
         expect_error(load_package("bozo/bozo"), "not found")
       })
@@ -188,11 +188,11 @@ describe("it can install from GitHub", {
     expect_false(is_github_package("glmnet"))
     expect_false(is_github_package("dplyr"))
   })
-  test_that("name_from_github_name helper function", {
-    expect_equal("dplyr", name_from_github_name("hadley/dplyr"))
-    expect_equal("Ramd", name_from_github_name("robertzk/Ramd"))
-    expect_equal("R6", name_from_github_name("wch/R6@v1.1"))
-    expect_equal("batchman", name_from_github_name("peterhurford/batchman@1.1"))
-    expect_equal("ggplot2", name_from_github_name("hadley/ggplot2@ref123abc"))
+  test_that("get_package_name_from_ref helper function", {
+    expect_equal("dplyr", get_package_name_from_ref("hadley/dplyr"))
+    expect_equal("Ramd", get_package_name_from_ref("robertzk/Ramd"))
+    expect_equal("R6", get_package_name_from_ref("wch/R6@v1.1"))
+    expect_equal("batchman", get_package_name_from_ref("peterhurford/batchman@1.1"))
+    expect_equal("ggplot2", get_package_name_from_ref("hadley/ggplot2@ref123abc"))
   })
 })
