@@ -1,3 +1,7 @@
+# Versoin 0.3.3
+  
+  * Fix problem where version mismatch removal was not actually taking place. :(
+
 # Version 0.3.2
 
   * Fix very bad problem where all package installations resulted in errors. :(
