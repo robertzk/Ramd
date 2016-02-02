@@ -71,12 +71,13 @@ describe("version mismatching", {
     test_that("it does not remove the package if there is not a version mismatch", {
       with_mock(
         `Ramd:::is_version_mismatch` = function(name) { FALSE },
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
         `devtools::install_github` = function(...) { "No installing!" },
         `utils::install.packages` = function(...) { "No installing!" },
         `utils::remove.packages` = function(name) { check_for_refs(name); called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
-          expect_true(load_package("glmnet"))
+          expect_error(load_package("glmnet"))
           expect_false(called)
         })
       })
