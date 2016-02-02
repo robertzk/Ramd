@@ -76,7 +76,7 @@ describe("version mismatching", {
         `utils::remove.packages` = function(name) { check_for_refs(name); called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
-          expect_error(load_package("glmnet"))  # because glmnet is not actually installed
+          expect_true(load_package("glmnet"))
           expect_false(called)
         })
       })
@@ -138,10 +138,16 @@ describe("it can install from CRAN", {
       expect_true(called)
     })
     test_that("it messages if verbose is TRUE", {
-      expect_message(load_package("glmnet", verbose = TRUE), "Installing")
+      with_mock(
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
+        expect_message(load_package("glmnet", verbose = TRUE), "Installing")
+      )
     })
     test_that("it messages the remote correctly", {
-      expect_message(load_package("glmnet", verbose = TRUE), "CRAN")
+      with_mock(
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
+        expect_message(load_package("glmnet", verbose = TRUE), "CRAN")
+      )
     })
     test_that("it does not message if verbose is FALSE", {
       expect_silent(load_package("glmnet", verbose = FALSE))
