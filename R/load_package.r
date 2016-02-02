@@ -24,7 +24,7 @@ load_package <- function(name, verbose = FALSE) {
   } else {
     if (is_github_package(name)) {
       remote <- "GitHub"
-        install_from_github(name, metadata, remote, verbose)
+      install_from_github(name, metadata, remote, verbose)
     } else {
       remote <- "CRAN"
       install_from_cran(name, remote, verbose)
