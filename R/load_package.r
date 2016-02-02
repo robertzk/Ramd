@@ -21,19 +21,17 @@ load_package <- function(name, verbose = FALSE) {
 
   if (package_is_installed(package_name)) {
     if (isTRUE(verbose)) { message(name, " already installed.") }
-    return(TRUE)
-  }
-
-  if (is_github_package(name)) {
-    remote <- "GitHub"
-    install_from_github(name, metadata, remote, verbose)
   } else {
-    remote <- "CRAN"
-    install_from_cran(name, remote, verbose)
-  }
-
-  if (!package_is_installed(package_name)) {
-    stop(paste("Package", name, "not found on", remote, "."))
+    if (is_github_package(name)) {
+      remote <- "GitHub"
+      install_from_github(name, metadata, remote, verbose)
+    } else {
+      remote <- "CRAN"
+      install_from_cran(name, remote, verbose)
+    }
+    if (!package_is_installed(package_name)) {
+      stop(paste("Package", name, "not found on", remote, "."))
+    }
   }
   require(package_name, character.only = TRUE)
 }

@@ -12,6 +12,7 @@ describe("package already installed", {
     with_mock(
       `Ramd:::package_is_installed` = function(name) { check_for_refs(name); TRUE },
       `devtools::install_github` = function(...) { stop("No installing!") },
+      `require` = function(name, ...) { check_for_refs(name); called <<- TRUE },
       `utils::install.packages` = function(...) { stop("No installing!") }, {
         test_that("it will not install if already installed", {
           expect_true(load_package("glmnet"))
@@ -21,6 +22,12 @@ describe("package already installed", {
         })
         test_that("it does not message if it is already installed and verbose is FALSE", {
           expect_silent(load_package("glmnet", verbose = FALSE))
+        })
+        test_that("the pacakge is loaded into memory", {
+          called <<- FALSE
+          expect_false(called)
+          expect_true(load_package("glmnet"))
+          expect_true(called)
         })
       })
   })
@@ -64,12 +71,13 @@ describe("version mismatching", {
     test_that("it does not remove the package if there is not a version mismatch", {
       with_mock(
         `Ramd:::is_version_mismatch` = function(name) { FALSE },
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
         `devtools::install_github` = function(...) { "No installing!" },
         `utils::install.packages` = function(...) { "No installing!" },
         `utils::remove.packages` = function(name) { check_for_refs(name); called <<- TRUE }, {
           called <<- FALSE
           expect_false(called)
-          expect_error(load_package("glmnet"))  # because glmnet is not actually installed
+          expect_error(load_package("glmnet"))
           expect_false(called)
         })
       })
@@ -119,16 +127,28 @@ describe("it can install from CRAN", {
   with_mock(
     `devtools::install_github` = function(...) { stop("Wrong installer!") },
     `stop` = function(...) { TRUE }, #Avoid crashing since we aren't really installing
-    `require` = function(name, ...) { check_for_refs(name); TRUE },
+    `require` = function(name, ...) { check_for_refs(name); called <<- TRUE },
     `utils::install.packages` = function(...) { "correct installer!" }, {
     test_that("it installs", {
       expect_true(load_package("glmnet"))
     })
+    test_that("the pacakge is loaded into memory", {
+      called <<- FALSE
+      expect_false(called)
+      expect_true(load_package("glmnet"))
+      expect_true(called)
+    })
     test_that("it messages if verbose is TRUE", {
-      expect_message(load_package("glmnet", verbose = TRUE), "Installing")
+      with_mock(
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
+        expect_message(load_package("glmnet", verbose = TRUE), "Installing")
+      )
     })
     test_that("it messages the remote correctly", {
-      expect_message(load_package("glmnet", verbose = TRUE), "CRAN")
+      with_mock(
+        `Ramd:::package_is_installed` = function(name) { check_for_refs(name); FALSE },
+        expect_message(load_package("glmnet", verbose = TRUE), "CRAN")
+      )
     })
     test_that("it does not message if verbose is FALSE", {
       expect_silent(load_package("glmnet", verbose = FALSE))

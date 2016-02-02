@@ -1,3 +1,7 @@
+# Version 0.3.8
+  
+  * Ensure that the package is brought into memory using `require` even if the package is already installed.
+
 # Version 0.3.7
 
   * Make sure a package exists before checking it for version mismatches.
